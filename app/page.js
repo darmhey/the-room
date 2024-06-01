@@ -1,5 +1,10 @@
-import Image from "next/image";
+import Link from "next/link";
+import Navigation from "./components/navigation/navigation";
 
 export default function Page() {
-  return <div>Hello Next!</div>;
+  return (
+    <div>
+      <h1>Welcome to The Room!</h1>
+    </div>
+  );
 }
