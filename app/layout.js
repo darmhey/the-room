@@ -1,4 +1,5 @@
-import Navigation from "./components/navigation/navigation";
+import Navigation from "./_components/Navigation";
+import Logo from "./_components/Logo";
 
 export const metadata = {
   title: "The Room",
@@ -7,7 +8,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Navigation />
+        <header>
+          <Logo />
+          <Navigation />
+        </header>
+
         <main>{children}</main>
       </body>
     </html>
