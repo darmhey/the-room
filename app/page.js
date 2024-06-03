@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import Navigation from "@/app/_components/Navigation";
 import bg from "@/public/bg.png";
 
 export default function Page() {
