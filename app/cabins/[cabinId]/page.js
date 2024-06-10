@@ -1,4 +1,11 @@
-import { getCabin, getCabins } from "@/app/_lib/data-service";
+import DateSelector from "@/app/_components/DateSelector";
+import ReservationForm from "@/app/_components/ReservationForm";
+import {
+  getBookedDatesByCabinId,
+  getCabin,
+  getCabins,
+  getSettings,
+} from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 
@@ -12,11 +19,13 @@ export async function generateStaticParams() {
   const ids = cabins.map((cabin) => ({
     cabinId: String(cabin.id),
   }));
-  console.log(ids);
   return ids;
 }
 export default async function Page({ params }) {
   const cabin = await getCabin(params.cabinId);
+  const settings = await getSettings();
+  const { minBookingLength, maxBookingLength } = settings;
+  const bookedDates = await getBookedDatesByCabinId(params.cabinId);
   const { id, name, maxCapacity, regularPrice, discount, image, description } =
     cabin;
 
@@ -66,8 +75,16 @@ export default async function Page({ params }) {
 
       <div>
         <h2 className="text-5xl font-semibold text-center">
-          Reserve today. Pay on arrival.
+          Reserve {name} today. Pay on arrival.
         </h2>
+        <div className="grid grid-cols-2 border border-primary-800 min-h-[400px]">
+          <DateSelector
+            cabin={cabin}
+            settings={settings}
+            bookedDates={bookedDates}
+          />
+          <ReservationForm cabin={cabin} />
+        </div>
       </div>
     </div>
   );
