@@ -4,13 +4,13 @@ import { createContext, useContext, useState } from "react";
 const ReservationContext = createContext();
 const initialState = { from: undefined, to: undefined };
 function ReservationProvider({ children }) {
-  const [range, setRange] = useContext(initialState);
+  const [range, setRange] = useState(initialState);
+  const resetRange = () => setRange(initialState);
+
   return (
-    <div>
-      <ReservationContext.Provider value={{ range, setRange }}>
-        {children}
-      </ReservationContext.Provider>
-    </div>
+    <ReservationContext.Provider value={{ range, setRange, resetRange }}>
+      {children}
+    </ReservationContext.Provider>
   );
 }
 
