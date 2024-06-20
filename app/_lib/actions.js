@@ -2,6 +2,7 @@
 import { auth, signIn, signOut } from "./auth";
 import { supabase } from "./supabase";
 import { revalidatePath } from "next/cache";
+import { getBookings } from "./data-service";
 
 export async function updateGuest(formData) {
   const session = await auth();
