@@ -51,11 +51,13 @@ export async function signInAction() {
 }
 
 export async function updateBooking(formData) {
-  console.log(formData);
+  //using formData, may need to convert data
+  //gotten from server to number
+  //console.log(formData);
+  const bookingId = Number(formData.get("bookingId"));
 
   const session = await auth();
   if (!session) throw new Error("You must be logged in");
-  const bookingId = Number(formData.get("bookingId"));
 
   const guestBookings = await getBookings(session.user.guestId);
   const guestBookingIds = guestBookings.map((booking) => booking.id);
@@ -79,6 +81,9 @@ export async function updateBooking(formData) {
     console.error(error);
     throw new Error("Booking could not be updated");
   }
+
+  revalidate(`/account/reservations/edit/${bookingId}`);
+  revalidate("/account/reservations");
 
   redirect("/account/reservations");
 }
